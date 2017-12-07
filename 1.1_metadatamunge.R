@@ -159,7 +159,7 @@ ForStacksAE <- rbind(select(AE_F2_DNA, ID, Cross, Type_Year),
       select(AE_F0_DNA, ID, Cross, Type_Year),
       select(AE_F1_DNA, ID, Cross, Type_Year))
 
-ForStacksAEUniq <- dplyr::left_join(ForStacksAE, All_geno_data, by=c("ID"="DNASample"))
+ForStacksAEUniq <- dplyr::left_join(ForStacksAE, All_geno_data, by=c("ID"="DNASample", "Cross"="Cross", "Type_Year"="Type_Year"))
 
 ForStacksAEUniq <- unique(ForStacksAEUniq)
 
@@ -217,7 +217,7 @@ write.table(Just_F2s, file = "../Metadata/AE_Mapping_list", quote = F, col.names
 ForStacksSS <- filter( DNA_data, Type_Year == "SigSelection") %>%
   select(ID, Cross, Species)
 
-ForStacksSSUniq <- dplyr::left_join(ForStacksSS, All_geno_data, by=c("ID"="DNASample"))
+ForStacksSSUniq <- dplyr::left_join(ForStacksSS, All_geno_data, by=c("ID"="DNASample", "Cross"="Cross"))
 ForStacksSSUniq <- droplevels(ForStacksSSUniq)
 
 ForStacksSSUniq$UniqID <- paste(ForStacksSSUniq$UniqID, ".trimmed.fq_q20.final.bam", sep = "")
@@ -275,7 +275,7 @@ command <- select(command, cp, UniqID, Folder)
 # Write out full data with phenotypes for SigSelection
 
 FullSS <- filter( DNA_data, Type_Year == "SigSelection")
-FullSSUniq <- dplyr::left_join(FullSS, All_geno_data, by=c("ID"="DNASample"))
+FullSSUniq <- dplyr::left_join(FullSS, All_geno_data, by=c("ID"="DNASample", "Cross"="Cross", "Type_Year"="Type_Year"))
 FullSSUniq <- droplevels(FullSSUniq)
 
 GeographyList <- c(AFFR="France", AROL="NA", BINY="nonNative", DEES="Spain", ESNK="NA",
@@ -335,3 +335,4 @@ colnames(FullSSUniq) <- c("ID","Type_Year","STACKSspecies","Pop","Indiv","Date",
                                "Species","Order")
 
 write.csv(FullSSUniq, "../Metadata/SigSelectionMeta.csv")
+
