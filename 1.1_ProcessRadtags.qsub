@@ -1,0 +1,47 @@
+#!/bin/sh -login
+#PBS -j oe
+#PBS -l nodes=1:ppn=1,walltime=04:00:00,mem=64gb
+#PBS -m a
+#PBS -l feature='intel16'
+
+# -o : tells it where to put output from your job
+# -j oe : specifies that output and error messages from your job can be placed in the same location
+# -l : resource requests (maximum amounts needed for each)
+# -M : email address to send status updates to
+# -m abe : what to send email updates about (abort, begin, end)
+# -N : names your job
+# -r n : tells it not to re-run the script in the case of an error (so it doesn't overwrite any results generated)
+# -t 0-? : job numbers for array submission
+
+
+source ~/.bash_profile
+
+#Starting in GBS/RawFastq/
+cd ${PBS_O_WORKDIR} || exit
+
+filelist=(*fastq.gz) #get list of sequencing lanes
+
+lane=${filelist[${PBS_ARRAYID}]} #assign indiv to be current sequence file
+
+barcode=`basename ${lane} .fastq`.barcodes
+
+PBS_JOBNAME=${PBS_JOBNAME}_${lane} #rename job to job_indiv
+
+mkdir ../ProcessRadtags/${lane}
+
+process_radtags -f ${lane} -i gzfastq -o ../ProcessRadtags/${lane}/ -b ../Metadata/PlateInfoSeq/${barcode} -D -e 'pstI' --retain_header -y fastq --filter_illumina
+
+
+cd ../ProcessRadtags/ || exit
+
+mv ${lane}/*.fq .
+
+
+## Expect 1425 individuals after processing plus 15 blanks
+
+fqT=`ls *[0-9].fq | wc -w`
+fqT=`expr ${fqT} - 1`
+
+if [[ ${fqT} = 1439 ]]
+then qsub ../congenial-parakeet/1.1_Trim_Align.qsub -N TrimmingReads -t 0-200 -v genome=Indicies/RrContigs.fa.fasta,gff=/mnt/research/radishGenomics/AnalysisOfSequencingFiles/MoghePublished/Rr_gene_pseu.gff.mod,gffi="Parent",exon="exon",stranded="no",MAXJOBID=${fqT},index=Indicies/Moghe2014_BT,MapFolder="MogheMap"
+fi
