@@ -55,7 +55,7 @@ mkdir fastQC/TrimmedFQC
 #Build indicies for mapping
 cd ProcessRadtags/Indicies || exit
 ln -sf /mnt/research/radishGenomics/AnalysisOfSequencingFiles/MoghePublished/RrContigs.fa.fasta .
-qsub ../../upgraded-lamp/1.1_BT2_build.qsub -N Moghe2014_BT -v genome=RrContigs.fa.fasta
+#qsub ../../upgraded-lamp/1.1_BT2_build.qsub -N Moghe2014_BT -v genome=RrContigs.fa.fasta
 
 cd ../../RawFastq/ || exit
 
