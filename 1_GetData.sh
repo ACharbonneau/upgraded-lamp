@@ -31,12 +31,10 @@ mv Metadata/OriginalFiles/PlateInfoSeq/ Metadata/PlateInfoSeq/
 mv Metadata/OriginalFiles/SequencerQC Metadata/SequencerQC
 cd Metadata/PlateInfoSeq/ || exit
 mv QTL_F2_8.txt C6G98ANXX_8_fastq.gz.keys.txt
-cd ../../congenial-parakeet/ || exit
+cd ../../upgraded-lamp/ || exit
 module load R/3.2.0
 R --file=1.1_metadatamunge.R
-cd ../Metadata/PlateInfoSeq/ || exit
-for i in  *.unique.txt; do cut -f 3,20 ${i} > `echo ${i} | sed s/.unique.txt/_fastq.gz.barcodes/` ; done
-cd ../../ || exit
+cd ../ || exit
 
 echo "3. Setting up workspace"
 
@@ -57,7 +55,7 @@ mkdir fastQC/TrimmedFQC
 #Build indicies for mapping
 cd ProcessRadtags/Indicies || exit
 ln -sf /mnt/research/radishGenomics/AnalysisOfSequencingFiles/MoghePublished/RrContigs.fa.fasta .
-qsub ../../congenial-parakeet/1.1_BT2_build.qsub -N Moghe2014_BT -v genome=RrContigs.fa.fasta
+qsub ../../upgraded-lamp/1.1_BT2_build.qsub -N Moghe2014_BT -v genome=RrContigs.fa.fasta
 
 cd ../../RawFastq/ || exit
 
@@ -65,4 +63,4 @@ ThisT=`ls *fastq.gz | wc -w`
 ThisT=`expr ${fqT} - 1`
 #qsub ../congenial-parakeet/1.1_FastQC.qsub -t 0-${ThisT}
 
-qsub ../congenial-parakeet/1.1_ProcessRadtags.qsub -N ProcessingRads -t 0-${ThisT}
+qsub ../upgraded-lamp/1.1_ProcessRadtags.qsub -N ProcessingRads -t 0-${ThisT}
