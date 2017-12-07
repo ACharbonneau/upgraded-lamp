@@ -60,7 +60,7 @@ ln -sf /mnt/research/radishGenomics/AnalysisOfSequencingFiles/MoghePublished/RrC
 cd ../../RawFastq/ || exit
 
 ThisT=`ls *fastq.gz | wc -w`
-ThisT=`expr ${fqT} - 1`
+ThisT=`expr ${ThisT} - 1`
 #qsub ../congenial-parakeet/1.1_FastQC.qsub -t 0-${ThisT}
 
 qsub ../upgraded-lamp/1.1_ProcessRadtags.qsub -N ProcessingRads -t 0-${ThisT}
