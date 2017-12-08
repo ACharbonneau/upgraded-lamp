@@ -34,7 +34,7 @@ process_radtags -f ${lane} -i gzfastq -o ../ProcessRadtags/${lane}/ -b ../Metada
 
 cd ../ProcessRadtags/ || exit
 
-mv ${lane}/*.fq .
+mv ${lane}/*.fq.gz .
 
 
 ## Expect 1425 individuals after processing plus 15 blanks

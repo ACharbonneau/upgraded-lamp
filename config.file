@@ -1,0 +1,24 @@
+Number of Processors
+20
+Maximum Memory
+64G
+Trimming
+yes
+Assembly?
+yes
+Type_of_Assembly
+SE
+Clustering_Similarity%
+0.85
+Mapping_Reads?
+yes
+Mapping_Match_Value
+1
+Mapping_MisMatch_Value
+3
+Mapping_GapOpen_Penalty
+5
+Calling_SNPs?
+yes
+Email
+fancy17@gmail.com
