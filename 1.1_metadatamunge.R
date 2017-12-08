@@ -67,7 +67,7 @@ All_geno_data <- list()
 
 for( X in 1:length(Geno_list)){
   TempFile <- read.table(paste(Geno_dir, Geno_list[ X ], sep=""), sep = "\t", header = T, na.strings = "")
-  TempFile$UniqID <- paste(TempFile$DNASample, gsub( '.*_([0-9]{1,2})', "\\1", TempFile$LibraryPlate, ignore.case = FALSE ), TempFile$SampleDNA_Well, sep=".")
+  TempFile$UniqID <- paste(TempFile$DNASample, gsub( '.*_([0-9]{1,2})', "\\1", TempFile$LibraryPlate, ignore.case = FALSE ), TempFile$SampleDNA_Well, "F", sep=".")
   ComboTemp <- left_join(TempFile, DNA_data, by=c("DNASample"="ID"))
   All_geno_data[[X]] <- ComboTemp
   write.table(select(ComboTemp, -Pedigree, -Population, -SeedLot), paste(Geno_dir, substr(Geno_list[X], 1, 11), ".unique.txt", sep=""), sep="\t", row.names=F, col.names=F, quote=F)
