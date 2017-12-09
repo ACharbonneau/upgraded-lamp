@@ -19,17 +19,14 @@ source ~/.bash_profile
 
 module load freebayes/1.0.2
 module load Trimmomatic/0.33
-module load bwa/0.7.12.r1044
 module load vcftools/0.1.14
 module load seqtk/1.0
 module load CDHIT/4.6.1
 module load vcflib/20140522
 module load gparallel/20131022
 module load BAMTools/2.2.3
-module load PEAR/0.9.6
-
-alias pearRM='pear'
+module load SAMTools/1.5
 
 cd ${PBS_O_WORKDIR} || exit
 
-dDocent config.file
+dDocent ../upgraded-lamp/config.file

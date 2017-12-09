@@ -222,26 +222,26 @@ ForStacksSSUniq <- droplevels(ForStacksSSUniq)
 
 ForStacksSSUniq$UniqID <- paste(ForStacksSSUniq$UniqID, ".trimmed.fq_q20.final.bam", sep = "")
 
-write.table(x = select(ForStacksSSUniq, UniqID, Cross, Species.x), file = "../Metadata/SS_data.pop",
+write.table(x = select(ForStacksSSUniq, UniqID, Cross, Species.y), file = "../Metadata/SS_data.pop",
             quote = F, sep = "\t", col.names = F, row.names = F)
 
 # Just RRR data
-Just_Rrr <- ForStacksSSUniq$UniqID[ForStacksSSUniq$Species.x == "Rrr"]
+Just_Rrr <- ForStacksSSUniq$UniqID[ForStacksSSUniq$Species.y == "Rrr"]
 #write.table(paste( " -s ./", Just_Rrr, sep=""), file = "../Metadata/SS_Rrr_cs_stacks_list", quote = F, col.names = F, row.names = F, eol = "")
 write.table(Just_Rrr, file = "../Metadata/SS_Rrr_list", quote = F, col.names = F, row.names = F)
 
 #Just landra
-Just_landra <- ForStacksSSUniq$UniqID[ForStacksSSUniq$Species.x == "Rrl"]
+Just_landra <- ForStacksSSUniq$UniqID[ForStacksSSUniq$Species.y == "Rrl"]
 #write.table(paste( " -s ./", Just_landra, sep=""), file = "../Metadata/SS_Rrl_cs_stacks_list", quote = F, col.names = F, row.names = F, eol = "")
 write.table(Just_landra, file = "../Metadata/SS_Rrl_list", quote = F, col.names = F, row.names = F)
 
 #Just crops
-Just_Rsat <- ForStacksSSUniq$UniqID[ForStacksSSUniq$Species.x == "Rsat"]
+Just_Rsat <- ForStacksSSUniq$UniqID[ForStacksSSUniq$Species.y == "Rsat"]
 #write.table(paste( " -s ./", Just_Rsat, sep=""), file = "../Metadata/SS_Rsat_cs_stacks_list", quote = F, col.names = F, row.names = F, eol = "")
 write.table(Just_Rsat, file = "../Metadata/SS_Rsat_list", quote = F, col.names = F, row.names = F)
 
 #RRR and landra
-Rrr_landra <- ForStacksSSUniq$UniqID[ForStacksSSUniq$Species.x == "Rrr" | ForStacksSSUniq$Species.x == "Rrl"]
+Rrr_landra <- ForStacksSSUniq$UniqID[ForStacksSSUniq$Species.y == "Rrr" | ForStacksSSUniq$Species.x == "Rrl"]
 #write.table(paste( " -s ./", Rrr_landra, sep=""), file = "../Metadata/SS_RrrRrl_cs_stacks_list", quote = F, col.names = F, row.names = F, eol = "")
 write.table(Rrr_landra, file = "../Metadata/SS_RrrRrl_list", quote = F, col.names = F, row.names = F)
 
@@ -335,4 +335,3 @@ colnames(FullSSUniq) <- c("ID","Type_Year","STACKSspecies","Pop","Indiv","Date",
                                "Species","Order")
 
 write.csv(FullSSUniq, "../Metadata/SigSelectionMeta.csv")
-
